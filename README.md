@@ -46,5 +46,5 @@ python3 build_full.py en     # 只生成英文
 ## 说明
 
 - 核心与 references 的衔接靠 HTML 注释标记 `<!-- FULL:name -->`；改标记名时同步改 `build_full.py`。
-- 历史版本不再放在 `archive/`，由 git 提交历史保存。
+- 旧版本已移出工作区；后续版本历史由 git 提交记录保存。
 - 本仓库默认分支为 `main`，默认 README 为中文。

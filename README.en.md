@@ -46,5 +46,5 @@ The English version is a translation, so its character count is not directly com
 ## Notes
 
 - The core and references are joined by HTML comment markers `<!-- FULL:name -->`; update `build_full.py` if you rename a marker.
-- Historical versions are no longer kept in `archive/`; git history is the record.
+- Older versions have been moved out of the workspace; future version history is kept in git commits.
 - The default branch is `main`, and the default README is Chinese.
