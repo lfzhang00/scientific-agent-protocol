@@ -4,6 +4,7 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 version="${1:-2.1.1}"
+version="${version#v}"
 tag="v${version}"
 
 if ! git rev-parse -q --verify "refs/tags/${tag}" >/dev/null; then
