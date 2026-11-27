@@ -2,7 +2,7 @@
 
 [English](README.en.md)
 
-本仓库是协议的测试、构建与分享工作区。中文版默认加载 `AGENTS.md`，英文版加载 `AGENTS.en.md`；`references/` 与 `references/en/` 按需读取，`build_full.py` 生成中英两种单文件版。当前工作区协议 2.2（2026-11-28，未发布）；最近发行包 v2.1.1（协议正文 2.1；许可与打包补丁）。
+本仓库是协议的测试、构建与分享工作区。中文版默认加载 `AGENTS.md`，英文版加载 `AGENTS.en.md`；`references/` 与 `references/en/` 按需读取，`build_full.py` 生成中英两种单文件版。当前发行 v2.2（协议正文 2.2，2026-11-28）。
 
 ## 文件
 
@@ -51,7 +51,7 @@ python3 build_full.py en     # 只生成英文
 
 ## 打包
 
-- 发布包由 GitHub Releases 提供；本地可运行 `scripts/package.sh v2.1.1` 生成 `dist/scientific-agent-protocol-v2.1.1.zip`。
+- 发布包由 GitHub Releases 提供；本地可运行 `scripts/package.sh v2.2` 生成 `dist/scientific-agent-protocol-v2.2.zip`。
 - 脚本要求对应 tag 已存在；先推送 tag。
 
 ## 修改流程

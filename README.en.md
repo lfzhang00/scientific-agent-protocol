@@ -2,7 +2,7 @@
 
 [Chinese](README.md) · Chinese is the default README.
 
-This repository is the test, build, and sharing workspace for the protocol. The Chinese version is the default (`AGENTS.md`); the English version is `AGENTS.en.md`. `references/` and `references/en/` are read on demand; `build_full.py` produces both single-file versions. Current workspace protocol: 2.2 (2026-11-28, unreleased); latest release package: v2.1.1 (protocol text 2.1; licensing and packaging patch).
+This repository is the test, build, and sharing workspace for the protocol. The Chinese version is the default (`AGENTS.md`); the English version is `AGENTS.en.md`. `references/` and `references/en/` are read on demand; `build_full.py` produces both single-file versions. Current release: v2.2 (protocol text 2.2, 2026-11-28).
 
 ## Files
 
@@ -51,7 +51,7 @@ The English version is a translation, so its character count is not directly com
 
 ## Packaging
 
-- Release packages are published on GitHub Releases; run `scripts/package.sh v2.1.1` locally to create `dist/scientific-agent-protocol-v2.1.1.zip`.
+- Release packages are published on GitHub Releases; run `scripts/package.sh v2.2` locally to create `dist/scientific-agent-protocol-v2.2.zip`.
 - The script requires the tag to exist; push it first.
 
 ## Editing
