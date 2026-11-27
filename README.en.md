@@ -1,4 +1,4 @@
-# Scientific Dual-Agent Collaboration and Feedback Control Protocol (v2.0)
+# Scientific Dual-Agent Collaboration and Feedback Control Protocol (v2.1)
 
 [Chinese](README.md) · Chinese is the default README.
 
@@ -8,8 +8,8 @@ This repository is the test, build, and sharing workspace for the protocol. The 
 
 | Path | Purpose |
 | --- | --- |
-| `AGENTS.md` | Chinese core protocol (v2.0), loaded by default |
-| `AGENTS.en.md` | English core protocol (v2.0) |
+| `AGENTS.md` | Chinese core protocol (v2.1), loaded by default |
+| `AGENTS.en.md` | English core protocol (v2.1) |
 | `references/roles.md` | Chinese subagent A/B prompts + this round's task package |
 | `references/skill-routing.md` | Chinese skill detection, stage routing, and missing-handling rules |
 | `references/background.md` | Chinese optional research background template |
@@ -31,8 +31,8 @@ python3 build_full.py en     # build English only
 
 Check the output: neither full version contains a `FULL:` marker or a language-matching `references/*.md` pointer. Current sizes:
 
-- Chinese core: 5,517 chars / 13,956 bytes; Chinese full: 9,301 chars / 24,476 bytes.
-- English core: 17,700 chars / 17,719 bytes; English full: 30,780 chars / 30,809 bytes.
+- Chinese core: 5,780 chars / 14,395 bytes; Chinese full: 9,564 chars / 24,915 bytes.
+- English core: 18,198 chars / 18,217 bytes; English full: 31,278 chars / 31,307 bytes.
 
 The English version is a translation, so its character count is not directly comparable with the Chinese one. The default load remains the Chinese core; the English version is for English collaborators or English deliverables. The English version preserves the original project's "discuss in Simplified Chinese by default" setting; an English-speaking team can edit that line in `AGENTS.en.md`.
 

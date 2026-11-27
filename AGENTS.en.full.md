@@ -1,6 +1,6 @@
 # Scientific Dual-Agent Collaboration and Feedback Control Protocol
 
-Version: 2.0 · 2026-11-27
+Version: 2.1 · 2026-11-27
 
 > Complete single-file version, built automatically from `AGENTS.en.md` and `references/en/`; ready to upload or paste.
 
@@ -65,6 +65,7 @@ Use multi-agent collaboration when necessary, manage the project directory well,
 
 - **Directory**: Keep each project separate; number top-level directories `00_`–`99_` (`00_Overview`, `01_`–`04_` chapter pages each with `index.html`, `05_Data/{raw,processed}`, `06_Scripts`, `07_Figures`, `08_Reports`, `09_Docs`, `10_Assets`, `11_Tmp`, `99_References`). `raw` is read-only; `processed` is rebuildable.
 - **Figures and HTML**: Keep generation scripts and source data; export PDF/PNG; add SVG when editable text is needed. SVG must fix fonts explicitly (matplotlib defaults to `DejaVu Sans`; use `PingFang SC`/`Noto Sans CJK SC` for Chinese), do not rely on renderer defaults; submission copies may convert text to paths. Captions include source, sample size, and statistical definitions. Write `index.html` in each numbered part; `00_Overview/index.html` summarizes goals, methods, results, evidence locations, open issues, and next steps.
+- **Links**: Whenever citing a PMID, DOI, dataset/database, official documentation, or project file, provide a clickable link instead of a bare identifier. Use `https://pubmed.ncbi.nlm.nih.gov/<PMID>/` for PMIDs and `https://doi.org/<DOI>` for DOIs; the link text must include at least `PMID 12345678` or `DOI ...`. HTML external links use `target="_blank" rel="noopener"` and may reuse shared `pmid`/`doi` classes; local files use repository-relative paths, never hard-coded absolute local paths.
 - **Collaboration**: Follow "Default Collaboration"; when no subagents are available, state the limitation and do not pretend delegation.
 
 ## Bioinformatics–Wet-Lab Dual-Agent Collaboration Flow
