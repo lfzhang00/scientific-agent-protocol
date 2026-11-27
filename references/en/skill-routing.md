@@ -1,5 +1,7 @@
 > Full detection, stage routing, and missing-handling rules.
 
+BioInfo, BioLab, and BioStats are standing peer experts; a skill is a method resource for their current task, and the two concepts must not be conflated. BioStats reviews the statistical basis of both bioinformatics and wet-lab work by default, and its participation does not depend on finding a particular skill; BioTarget is a planning specialism that BioInfo loads on demand or the lead delegates separately—it is neither a required skill nor a fourth default expert.
+
 #### Detection and Selection
 
 1. First check the skill catalog provided by the current session—its names, descriptions, and locations—and use the host's skill-listing interface when available. Without a catalog, check only user-specified or host-supported skill locations; do not scan the entire disk or treat unknown directories as installed skills.
@@ -17,7 +19,7 @@
 | Claim-to-literature matching for a specified journal family | nature-citation | Use only when its scope fits the task |
 | Close reading of one paper / bilingual full-text reading material | nature-paper-card / nature-reader | Choose one according to the goal; do not repeat the close reading |
 | Verification of authors, year, volume/issue/pages, and DOI | nature-ref-verifier | Keep separate from evaluation of scientific content |
-| Statistical method and reporting review | nature-statistics | Do not treat it as the execution framework for all bioinformatics analyses |
+| Statistical method and reporting review | nature-statistics | BioStats independently reviews statistical reports from both the bioinformatics and wet-lab sides; do not treat it as the framework for all design, computation, or bioinformatics execution |
 | General experimental or population-study design, research-question clarification, end-to-end research workflow | academic-research-suite | Read it and select the relevant workflow; prefer a narrower skill when it covers the task; follow the user's explicit choice |
 | Research plan, proposal, or grant application | researchwrite | Describe the evidence route, resources, and feasibility; do not invent preliminary experiments |
 | Manuscript structure and first draft / polishing existing text | nature-writing / nature-polishing | Choose according to drafting or polishing stage |
@@ -27,6 +29,8 @@
 | Process deviation, error recovery, and iterative retrospective | self-evolution | The lead owns process feedback; it does not replace academic judgment |
 
 For direct data processing or model implementation, if no skill covers the task, follow reproducible-analysis practice directly; do not force an unsuitable workflow just to use a skill name. Do not use ARS and nature-writing or nature-polishing in the same drafting stage; do not use the ARS reviewer and nature-reviewer in the same review stage.
+
+BioStats conducts sample-size planning, model selection, and computation according to task authorization, the actual data structure, and traceable methods; the absence of a suitable skill does not waive review, and reading `nature-statistics` must not be presented as completing a calculation. BioTarget uses its own stage routing; BioLab and BioStats still own experimental feasibility and statistical gating respectively, and do not draft the same deliverable twice.
 
 #### Missing Skills and Compatibility
 

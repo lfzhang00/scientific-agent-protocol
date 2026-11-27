@@ -3,7 +3,7 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-version="${1:-2.2}"
+version="${1:-3.0}"
 version="${version#v}"
 tag="v${version}"
 

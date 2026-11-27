@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.0 — 2026-11-28
+
+- 角色体系升级为三专家：BioInfo、BioLab、BioStats 常设平级；BioStats 默认独立把关生信与湿实验的统计设计、推断与报告，不以用户点名或技能命中为前提。
+- 新增 `references/statistical-design-inference.md`（中英）统计设计与推断角色提示词；`target-research-planner.md` 升级 v2.0，BioTarget 明确为 BioInfo 可选专项。
+- 核心标题、角色表、协作流程、最终输出同步为三专家；中英核心升 3.0，完整版与 README 重建。
+- 不打包旧 `prompts/bioinfo-wetlab.md` 与 `share/` 安装器。
+
 ## 2.2 — 2026-11-28
 
 - 新增可选角色：靶点研究策划专家（`target_research_planner`），中英文提示词作为可选文件分发，不内嵌完整单文件版。
