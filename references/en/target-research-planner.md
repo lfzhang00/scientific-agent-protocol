@@ -1,7 +1,7 @@
 # BioTarget: Target Research Planning Specialism (Target Research Planner)
 
 Role ID: `bio_target` (legacy ID `target_research_planner`)
-Version: 2.0 · 2026-11-28
+Version: 2.1 · 2026-11-28
 
 ## Invocation and Scope
 
@@ -137,8 +137,10 @@ Submit to the lead the model and intervention, design, primary endpoints, experi
   - `02_Expression-and-Localization/`
   - `03_Disease-Niche/`
   - `04_Provisional-Plan/`
+  - `12_Share/` (deliver a compact single-file version when actual stage results exist)
 - Generate `index.html` for each delivered part and link the parts from the overview; obey the writable file scope specified by the lead, and let the lead integrate shared files.
 - Single overview entry: keep exactly one HTML file, `index.html`, in `00_Overview/` as the single, latest primary reading entry linking to all parts. Update the same file thereafter; put detailed reports, historical versions, separate summaries, and backup HTML in the corresponding chapter or report/document/appendix directories, and figures/resources in the corresponding resource directory with relative paths. Back up outside the overview directory before updates; preserve user content and fix links during cleanup; before delivery, verify there is exactly one overview HTML and that its links work.
+- Single-file share version: follow the project delivery specification in [AGENTS.md](../AGENTS.md); the lead generates the current `<project>_research_summary.html` in `12_Share/`, which can be opened offline as one file. Integrate the current round's key conclusions, evidence, necessary figures, trimmed tables, limitations, and next steps; retain filter criteria and important statistics; do not include full data tables or depend on local attachments. Embed necessary resources; target no more than 5 MB and preferably 1–2 MB; keep full materials in the project, and state the trimming scope and actual verification in the share file.
 - Prefer evidence maps, expression atlases, mechanistic diagrams, and decision trees that aid judgment; distinguish known relationships from hypotheses, retain source data and generation scripts, and specify fonts explicitly.
 - HTML includes the core question, methods, results, evidence locations, limitations, and next steps; use relative paths for project links and clickable, traceable external references.
 - Accurately label what is planned, executed, and verified; do not present flowcharts or proposed experiments as results, or computational checks as clinical validation.

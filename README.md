@@ -1,15 +1,15 @@
-# 科研三专家协作与反馈控制协议（v3.0）
+# 科研三专家协作与反馈控制协议（v3.1）
 
 [English](README.en.md)
 
-本仓库是协议的测试、构建与分享工作区。中文版默认加载 `AGENTS.md`，英文版加载 `AGENTS.en.md`；`references/` 与 `references/en/` 按需读取，`build_full.py` 生成中英两种单文件版。当前发行 v3.0（协议正文 3.0，2026-11-28）。
+本仓库是协议的测试、构建与分享工作区。中文版默认加载 `AGENTS.md`，英文版加载 `AGENTS.en.md`；`references/` 与 `references/en/` 按需读取，`build_full.py` 生成中英两种单文件版。当前发行 v3.1（协议正文 3.1，2026-11-28）。
 
 ## 文件
 
 | 路径 | 作用 |
 | --- | --- |
-| `AGENTS.md` | 中文核心协议（v3.0），日常默认加载 |
-| `AGENTS.en.md` | 英文核心协议（v3.0） |
+| `AGENTS.md` | 中文核心协议（v3.1），日常默认加载 |
+| `AGENTS.en.md` | 英文核心协议（v3.1） |
 | `references/roles.md` | 中文三专家（BioInfo/BioLab/BioStats）提示词 + 本轮任务包 |
 | `references/skill-routing.md` | 中文技能检测、阶段路由表、缺失处理 |
 | `references/background.md` | 中文可选研究背景模板 |
@@ -40,8 +40,8 @@ python3 build_full.py en     # 只生成英文
 
 检查输出：两版 full 均无 `FULL:` 标记，且无对应语言的 `references/*.md` 指针。当前尺寸：
 
-- 中文核心：11,087 字符 / 26,774 bytes；中文完整版：16,015 字符 / 40,736 bytes。
-- 英文核心：34,252 字符 / 34,279 bytes；英文完整版：52,377 字符 / 52,414 bytes。
+- 中文核心：12,633 字符 / 30,854 bytes；中文完整版：17,561 字符 / 44,816 bytes。
+- 英文核心：39,334 字符 / 39,363 bytes；英文完整版：57,459 字符 / 57,498 bytes。
 
 英文是翻译，字符数与中文不可直接比较；默认仍只加载中文核心，英文版用于英文协作者或英文交付。英文版保留了原项目“默认使用简体中文讨论”的设定；英文团队使用时可自行修改 `AGENTS.en.md` 中该句。
 
@@ -53,7 +53,7 @@ python3 build_full.py en     # 只生成英文
 
 ## 打包
 
-- 发布包由 GitHub Releases 提供；本地可运行 `scripts/package.sh v3.0` 生成 `dist/scientific-agent-protocol-v3.0.zip`。
+- 发布包由 GitHub Releases 提供；本地可运行 `scripts/package.sh v3.1` 生成 `dist/scientific-agent-protocol-v3.1.zip`。
 - 脚本要求对应 tag 已存在；先推送 tag。
 
 ## 修改流程
