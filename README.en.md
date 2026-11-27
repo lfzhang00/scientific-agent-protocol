@@ -2,7 +2,7 @@
 
 [Chinese](README.md) · Chinese is the default README.
 
-This repository is the test, build, and sharing workspace for the protocol. The Chinese version is the default (`AGENTS.md`); the English version is `AGENTS.en.md`. `references/` and `references/en/` are read on demand; `build_full.py` produces both single-file versions.
+This repository is the test, build, and sharing workspace for the protocol. The Chinese version is the default (`AGENTS.md`); the English version is `AGENTS.en.md`. `references/` and `references/en/` are read on demand; `build_full.py` produces both single-file versions. Current release package: v2.1.1 (protocol text 2.1; licensing and packaging patch).
 
 ## Files
 
@@ -20,6 +20,11 @@ This repository is the test, build, and sharing workspace for the protocol. The 
 | `AGENTS.full.md` | Chinese full single-file version (generated; do not edit by hand) |
 | `AGENTS.en.full.md` | English full single-file version (generated; do not edit by hand) |
 | `README.md` | Chinese README (default) |
+| `LICENSE` | MIT license for code |
+| `LICENSE-docs` | CC BY 4.0 license for documentation |
+| `THIRD_PARTY.md` | Third-party names and dependency notice |
+| `CHANGELOG.md` | Version history |
+| `scripts/package.sh` | Builds the release zip in `dist/` |
 
 ## Build
 
@@ -36,12 +41,29 @@ Check the output: neither full version contains a `FULL:` marker or a language-m
 
 The English version is a translation, so its character count is not directly comparable with the Chinese one. The default load remains the Chinese core; the English version is for English collaborators or English deliverables. The English version preserves the original project's "discuss in Simplified Chinese by default" setting; an English-speaking team can edit that line in `AGENTS.en.md`.
 
+## Dependencies
+
+- Build: Python 3.8+ with the standard library only (`re`, `sys`, `pathlib`); no third-party Python packages.
+- Packaging: `git` and `git archive`; no extra dependencies.
+- Skills named in the routing table are optional and are not distributed with this repository; if missing, use the protocol's built-in fallback.
+
+## Packaging
+
+- Release packages are published on GitHub Releases; run `scripts/package.sh v2.1.1` locally to create `dist/scientific-agent-protocol-v2.1.1.zip`.
+- The script requires the tag to exist; push it first.
+
 ## Editing
 
 1. Edit only `AGENTS.md`, `AGENTS.en.md`, or the matching files under `references/`; both `*.full.md` files are generated and must not be edited by hand.
 2. Run `python3 build_full.py`.
 3. Verify using the checks above; share the matching `*.full.md` when needed.
 4. To use the protocol in a project: copy `AGENTS.md` + `references/` for Chinese, or `AGENTS.en.md` + `references/en/` for English. Use the full version only for one-off use or cross-assistant sharing.
+
+## License
+
+- Code (`build_full.py`, `scripts/package.sh`): MIT; see `LICENSE`.
+- Documentation (`AGENTS*.md`, `README*.md`, `references/**`, `CHANGELOG.md`, `THIRD_PARTY.md`): CC BY 4.0; see `LICENSE-docs`.
+- Third-party skill names are referenced for routing only; no content or code is bundled; see `THIRD_PARTY.md`.
 
 ## Notes
 
