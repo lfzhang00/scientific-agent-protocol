@@ -23,11 +23,13 @@ LANGS = {
             ("`references/background.md` 的模板", "文末的背景模板"),
             ("`references/skill-routing.md`", "下文的“Skill 检测与调用”"),
             ("`references/roles.md`", "下文的子智能体角色提示词"),
+            ("完整角色提示词见 [references/target-research-planner.md](references/target-research-planner.md)", "完整角色提示词为可选角色文件（单文件完整版不内嵌）"),
         ],
         "pointers": (
             "references/roles.md",
             "references/skill-routing.md",
             "references/background.md",
+            "references/target-research-planner.md",
         ),
     },
     "en": {
@@ -43,11 +45,13 @@ LANGS = {
             ("`references/en/background.md`", "the template at the end of this file"),
             ("`references/en/skill-routing.md`", '"Skill Detection and Selection" below'),
             ("`references/en/roles.md`", "the subagent role prompts below"),
+            ("the full role prompt is in [references/en/target-research-planner.md](references/en/target-research-planner.md)", "the full role prompt is an optional role file (not included in this single-file version)"),
         ],
         "pointers": (
             "references/en/roles.md",
             "references/en/skill-routing.md",
             "references/en/background.md",
+            "references/en/target-research-planner.md",
         ),
     },
 }
