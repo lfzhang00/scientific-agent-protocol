@@ -1,77 +1,78 @@
-# Scientific Three-Expert Collaboration and Feedback Control Protocol (v3.1)
+# Three-Expert Research Collaboration Protocol
 
-[Chinese](README.md) · Chinese is the default README.
+[中文](README.md)
 
-This repository is the test, build, and sharing workspace for the protocol. The Chinese version is the default (`AGENTS.md`); the English version is `AGENTS.en.md`. `references/` and `references/en/` are read on demand; `build_full.py` produces both single-file versions. Current release: v3.1 (protocol text 3.1, 2026-11-28).
+These prompts organize an AI assistant's work across bioinformatics, experimental biology, and statistics. BioInfo, BioLab, and BioStats participate by default in substantive research tasks. BioTarget adds target research planning when needed. Use the protocol for early research, data interpretation, experimental design, and study planning.
 
-## Files
-
-| Path | Purpose |
+| Role | Responsibility |
 | --- | --- |
-| `AGENTS.md` | Chinese core protocol (v3.1), loaded by default |
-| `AGENTS.en.md` | English core protocol (v3.1) |
-| `references/roles.md` | Chinese three-expert (BioInfo/BioLab/BioStats) prompts + this round's task package |
-| `references/skill-routing.md` | Chinese skill detection, stage routing, and missing-handling rules |
-| `references/background.md` | Chinese optional research background template |
-| `references/en/roles.md` | English three-expert (BioInfo/BioLab/BioStats) prompts + this round's task package |
-| `references/en/skill-routing.md` | English skill detection, stage routing, and missing-handling rules |
-| `references/en/background.md` | English optional research background template |
-| `references/target-research-planner.md` | Chinese optional role: BioTarget Target Research Planner prompt |
-| `references/en/target-research-planner.md` | English optional role: BioTarget Target Research Planner prompt |
-| `references/statistical-design-inference.md` | Chinese standing role: BioStats statistical design and inference prompt |
-| `references/en/statistical-design-inference.md` | English standing role: BioStats statistical design and inference prompt |
-| `build_full.py` | Builds both single-file versions from each core + references |
-| `AGENTS.full.md` | Chinese full single-file version (generated; do not edit by hand) |
-| `AGENTS.en.full.md` | English full single-file version (generated; do not edit by hand) |
-| `README.md` | Chinese README (default) |
-| `LICENSE` | MIT license for code |
-| `LICENSE-docs` | CC BY 4.0 license for documentation |
-| `THIRD_PARTY.md` | Third-party names and dependency notice |
-| `CHANGELOG.md` | Version history |
-| `scripts/package.sh` | Builds the release zip in `dist/` |
+| BioInfo | Data sources, computational analysis, and biological interpretation |
+| BioLab | Experimental models, interventions, and mechanistic validation |
+| BioStats | Independent review of design, statistics, and inference in both areas |
+| BioTarget | An optional BioInfo workflow for target evidence, expression and localization, disease questions, and study plans |
 
-## Build
+## Get started
+
+Choose the setup that fits your work.
+
+### Use in a project
+
+1. Copy [AGENTS.md](AGENTS.md) and `references/` into the project root for the Chinese edition. Merge any existing `AGENTS.md` rules and preserve project-specific instructions.
+2. For English, use [AGENTS.en.md](AGENTS.en.md) and `references/en/`. If the assistant reads `AGENTS.md` by default, save the selected English core under that name.
+3. Start a new chat, or ask the assistant to reread the project rules in an existing chat, then provide your question and materials. For example:
+
+   > Follow the project protocol to assess [research question]. Available materials: [files or evidence]. This round covers only [scope] and should produce [deliverable]. Constraints: [time and resources].
+
+The background template is optional. Role names define assignments; actual delegation depends on the assistant and its tools. If independent agents are unavailable, the assistant should disclose the limitation and review the three perspectives in sequence.
+
+### One-off use or sharing with another assistant
+
+Send the [English single-file edition](AGENTS.en.full.md) or the [Chinese single-file edition](AGENTS.full.md). Both include the full instructions for BioInfo, BioLab, BioStats, and BioTarget; no `references/` directory is needed. Third-party skills must be available in the recipient's environment.
+
+## Workflow and outputs
+
+The coordinator supplies a shared background and evidence version. The three experts assess the material independently, then cross-review their reports. BioStats participates from the design stage and reviews relevant materials before experiments, main analyses, and final conclusions. New evidence or disagreements prompt targeted revisions. File operations, ordinary lookups, and prompt configuration are handled directly.
+
+Research outputs use chapter HTML pages. `00_Overview/index.html` is the sole project overview. `12_Share/<study>_research_summary.html` is a compact file that recipients can open offline, with a target size of no more than 5 MB. Full data, scripts, and long tables stay in the project. Using or editing this protocol alone does not generate a research report. Preserve an existing project's directory names when they differ from these defaults.
+
+BioTarget covers resources such as GTEx, CELLxGENE, Tabula Sapiens, HPA, UniProt, GWAS Catalog, and OMIM, with guidance on provenance and overlapping evidence. Select resources for the question; querying every database is unnecessary.
+
+## Maintain the prompts
+
+Edit source files and regenerate the single-file editions.
+
+| File | Purpose |
+| --- | --- |
+| `AGENTS.md`, `AGENTS.en.md` | Chinese and English core instructions |
+| `references/`, `references/en/` | Role prompts, skill routing, and background templates in each language |
+| `AGENTS.full.md`, `AGENTS.en.full.md` | Generated single-file editions; do not edit directly |
+| [build_full.py](build_full.py) | Expands the core, supporting files, and both specialist role prompts |
+| [scripts/package.sh](scripts/package.sh) | Exports a ZIP from a local Git tag |
+| [CHANGELOG.md](CHANGELOG.md) | Version history |
+
+After changing sources, rebuild with Python 3.8 or later:
 
 ```bash
-python3 build_full.py        # build both Chinese and English full versions
-python3 build_full.py zh     # build Chinese only
-python3 build_full.py en     # build English only
+python3 build_full.py       # both languages
+python3 build_full.py zh    # Chinese only
+python3 build_full.py en    # English only
+python3 build_full.py --check  # check that generated editions match their sources
 ```
 
-Check the output: neither full version contains a `FULL:` marker or a language-matching `references/*.md` pointer. Current sizes:
+The build uses only the Python standard library. It checks supporting files, complete role prompts, and internal links, and reports missing content. Keep the editions aligned in role structure, evidence standards, and scope, while writing natural prose in each language.
 
-- Chinese core: 12,633 chars / 30,854 bytes; Chinese full: 17,561 chars / 44,816 bytes.
-- English core: 39,334 chars / 39,363 bytes; English full: 57,459 chars / 57,498 bytes.
+Before delivery, run `git diff --check`, inspect generated files, and search for formulaic contrasts, stock transitions, unsupported emphasis, repetitive conclusions, and decorative em dashes. Review each match in context; retain scientific qualifications and technical notation.
 
-The English version is a translation, so its character count is not directly comparable with the Chinese one. The default load remains the Chinese core; the English version is for English collaborators or English deliverables. The English version preserves the original project's "discuss in Simplified Chinese by default" setting; an English-speaking team can edit that line in `AGENTS.en.md`.
+## Export a release archive
 
-## Dependencies
+```bash
+bash scripts/package.sh v3.2
+```
 
-- Build: Python 3.8+ with the standard library only (`re`, `sys`, `pathlib`); no third-party Python packages.
-- Packaging: `git` and `git archive`; no extra dependencies.
-- Skills named in the routing table are optional and are not distributed with this repository; if missing, use the protocol's built-in fallback.
+The tag must exist locally. The script exports the tagged commit to `dist/`; it excludes uncommitted changes and does not require the tag to be pushed. Creating tags, committing changes, and publishing releases remain separate maintainer decisions.
 
-## Packaging
+## Skills and licensing
 
-- Release packages are published on GitHub Releases; run `scripts/package.sh v3.1` locally to create `dist/scientific-agent-protocol-v3.1.zip`.
-- The script requires the tag to exist; push it first.
+The assistant checks the skills available in its environment, reads the relevant `SKILL.md`, and selects skills for each stage. The protocol does not install skills or assume a fixed installation directory. Missing skills require a stated limitation and a suitable fallback.
 
-## Editing
-
-1. Edit only `AGENTS.md`, `AGENTS.en.md`, or the matching files under `references/`; both `*.full.md` files are generated and must not be edited by hand.
-2. Run `python3 build_full.py`.
-3. Verify using the checks above; share the matching `*.full.md` when needed.
-4. To use the protocol in a project: copy `AGENTS.md` + `references/` for Chinese, or `AGENTS.en.md` + `references/en/` for English. Use the full version only for one-off use or cross-assistant sharing.
-
-## License
-
-- Code (`build_full.py`, `scripts/package.sh`): MIT; see `LICENSE`.
-- Documentation (`AGENTS*.md`, `README*.md`, `references/**`, `CHANGELOG.md`, `THIRD_PARTY.md`): CC BY 4.0; see `LICENSE-docs`.
-- Third-party skill names are referenced for routing only; no content or code is bundled; see `THIRD_PARTY.md`.
-
-## Notes
-
-- The core and references are joined by HTML comment markers `<!-- FULL:name -->`; update `build_full.py` if you rename a marker.
-- The optional `target_research_planner` and `statistical_design_inference` role prompts are not embedded in `*.full.md`; when sharing, include the matching `references/target-research-planner.md` and `references/statistical-design-inference.md`.
-- Older versions have been moved out of the workspace; future version history is kept in git commits.
-- The default branch is `main`, and the default README is Chinese.
+Build and packaging code use the [MIT license](LICENSE). Prompts and documentation use [CC BY 4.0](LICENSE-docs). Third-party skill content and code are not distributed here; see [Third-party notices](THIRD_PARTY.md).

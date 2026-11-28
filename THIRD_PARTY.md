@@ -1,30 +1,9 @@
-# Third-Party Notices
+# Third-party notices
 
-This repository does not bundle third-party skills, their source code, their
-prose, or their data.
+The protocol refers to `nature-*`, `academic-research-suite`, `researchwrite`, and `self-evolution` by name to help assistants select available skills. OpenClaw and Heartbeat appear as examples of features that require separate authorization.
 
-## Referenced by name only
+Third-party skill instructions, code, and data are not bundled. Users obtain them separately under their respective licenses. References do not imply affiliation or endorsement.
 
-The protocol's routing table and optional-skill notes mention skill names for
-discoverability, including `nature-*` (Nature Skills), `academic-research-suite`,
-`researchwrite`, and `self-evolution`. Other documents may mention tools such as
-`OpenClaw` or `Heartbeat` as optional examples.
+Building requires Python 3.8 or later with its standard library. Packaging requires Bash and Git. No third-party Python packages are needed.
 
-These names are references only. No text, code, data, or license from those
-projects is included in this repository. Each project remains under its own
-license and copyright; users install and use it separately.
-
-## Build and packaging
-
-`build_full.py` and `scripts/package.sh` use only the Python standard library
-and `git`. No third-party Python packages are required.
-
-## No endorsement
-
-Mention of a third-party project does not imply affiliation with or endorsement
-by that project.
-
-## Reporting
-
-If you believe that content in this repository is improperly attributed, please
-open an issue in the repository so it can be reviewed and corrected.
+Report attribution concerns through the repository's issue tracker.

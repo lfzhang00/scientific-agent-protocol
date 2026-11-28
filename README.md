@@ -1,77 +1,78 @@
-# 科研三专家协作与反馈控制协议（v3.1）
+# 科研三专家协作协议
 
 [English](README.en.md)
 
-本仓库是协议的测试、构建与分享工作区。中文版默认加载 `AGENTS.md`，英文版加载 `AGENTS.en.md`；`references/` 与 `references/en/` 按需读取，`build_full.py` 生成中英两种单文件版。当前发行 v3.1（协议正文 3.1，2026-11-28）。
+这套提示词帮助 AI 助手分工审查科研问题。BioInfo、BioLab 和 BioStats 默认参与实质性科研任务；BioTarget 按需处理靶点研究策划。适合研究前期调研、数据解释、实验设计和方案修订。
 
-## 文件
-
-| 路径 | 作用 |
+| 角色 | 负责什么 |
 | --- | --- |
-| `AGENTS.md` | 中文核心协议（v3.1），日常默认加载 |
-| `AGENTS.en.md` | 英文核心协议（v3.1） |
-| `references/roles.md` | 中文三专家（BioInfo/BioLab/BioStats）提示词 + 本轮任务包 |
-| `references/skill-routing.md` | 中文技能检测、阶段路由表、缺失处理 |
-| `references/background.md` | 中文可选研究背景模板 |
-| `references/en/roles.md` | 英文三专家（BioInfo/BioLab/BioStats）提示词 + 本轮任务包 |
-| `references/en/skill-routing.md` | 英文技能检测、阶段路由表、缺失处理 |
-| `references/en/background.md` | 英文可选研究背景模板 |
-| `references/target-research-planner.md` | 中文可选角色：BioTarget 靶点研究策划专项提示词 |
-| `references/en/target-research-planner.md` | English optional role: BioTarget Target Research Planner prompt |
-| `references/statistical-design-inference.md` | 中文常设角色：BioStats 统计设计与推断提示词 |
-| `references/en/statistical-design-inference.md` | English standing role: BioStats statistical design and inference prompt |
-| `build_full.py` | 由核心 + references 生成中英单文件版 |
-| `AGENTS.full.md` | 中文完整单文件版（生成，不手改） |
-| `AGENTS.en.full.md` | 英文完整单文件版（生成，不手改） |
-| `README.en.md` | 英文说明 |
-| `LICENSE` | 代码 MIT 许可 |
-| `LICENSE-docs` | 文档 CC BY 4.0 许可 |
-| `THIRD_PARTY.md` | 第三方名称与依赖声明 |
-| `CHANGELOG.md` | 版本变更 |
-| `scripts/package.sh` | 生成 `dist/` 发布 zip |
+| BioInfo | 数据来源、计算分析与生物学解释 |
+| BioLab | 实验模型、干预设计与机制验证 |
+| BioStats | 独立审查生信和湿实验两侧的设计、统计与推断 |
+| BioTarget | BioInfo 的可选专项：靶点证据、表达定位、疾病切口与研究方案 |
 
-## 构建
+## 开始使用
+
+按使用场景选择一种方式。
+
+### 用于一个项目
+
+1. 将 [AGENTS.md](AGENTS.md) 和 `references/` 复制到项目根目录。已有 `AGENTS.md` 时合并规则，保留原有约定。
+2. 英文团队可用 [AGENTS.en.md](AGENTS.en.md) 及 `references/en/`；若助手默认读取 `AGENTS.md`，将选用的英文核心另存为该文件名。
+3. 新建聊天，或在已有聊天中要求助手重新读取项目规则，然后提供问题与材料。例如：
+
+   > 请按项目协议评估 [研究问题]。已有材料是 [文件或证据]，本轮只完成 [范围]，交付 [成果]。时间和资源限制为 [条件]。
+
+背景模板可选，不必先填完整表格。协议中的角色名是分工约定，能否实际调用子智能体取决于助手及其工具。无法委派时，助手应说明限制，按三个专业视角依次审查。
+
+### 一次性使用或分享给其他助手
+
+发送 [中文完整单文件版](AGENTS.full.md) 或 [English single-file edition](AGENTS.en.full.md)。两版均包含 BioInfo、BioLab、BioStats 和 BioTarget 的完整指令，无需附带 `references/`。第三方 skills 需由使用者所在环境提供。
+
+## 默认流程与交付
+
+协调者统一背景和证据，三个专家先独立评估，再交叉审查。BioStats 从设计阶段参与，在实验、主要分析和结论定稿前审查相关材料。遇到新证据或分歧时，更新受影响部分；文件操作、普通查询和提示词配置直接处理。
+
+实际研究成果按章节生成 HTML。`00_总览/index.html` 是项目内唯一总览入口；`12_分享/<课题名>_研究摘要.html` 是可单独发送、离线打开的精简分享版，目标不超过 5 MB。完整数据、脚本和长表保留在项目内。仅使用或修改本协议不会自动生成研究报告。
+
+BioTarget 保留 GTEx、CELLxGENE、Tabula Sapiens、HPA、UniProt，以及 GWAS Catalog、OMIM 等数据库的使用范围、证据来源和去重要求；按问题选择资源，不要求每次遍历全部数据库。
+
+## 维护提示词
+
+源文件与生成文件分开维护。
+
+| 文件 | 用途 |
+| --- | --- |
+| `AGENTS.md`、`AGENTS.en.md` | 中英文核心协议 |
+| `references/`、`references/en/` | 对应语言的角色、技能路由和背景模板 |
+| `AGENTS.full.md`、`AGENTS.en.full.md` | 自动生成的完整单文件版，请勿直接编辑 |
+| [build_full.py](build_full.py) | 展开核心、引用资料和两个专项角色提示词 |
+| [scripts/package.sh](scripts/package.sh) | 从本地 Git 标签导出 ZIP |
+| [CHANGELOG.md](CHANGELOG.md) | 版本记录 |
+
+修改源文件后，用 Python 3.8 或更高版本重新生成：
 
 ```bash
-python3 build_full.py        # 同时生成中文和英文完整版
-python3 build_full.py zh     # 只生成中文
-python3 build_full.py en     # 只生成英文
+python3 build_full.py       # 中英两版
+python3 build_full.py zh    # 仅中文
+python3 build_full.py en    # 仅英文
+python3 build_full.py --check  # 检查已提交的完整版是否与源文件一致
 ```
 
-检查输出：两版 full 均无 `FULL:` 标记，且无对应语言的 `references/*.md` 指针。当前尺寸：
+构建只使用 Python 标准库。脚本检查引用资料、角色全文和内部链接；缺失时报告错误。中文版与英文版应同步修改，英文按自然表达改写，保留相同的角色关系、证据要求和执行范围。
 
-- 中文核心：12,633 字符 / 30,854 bytes；中文完整版：17,561 字符 / 44,816 bytes。
-- 英文核心：39,334 字符 / 39,363 bytes；英文完整版：57,459 字符 / 57,498 bytes。
+交付前运行 `git diff --check`，检查生成文件，并搜索“不是……而是……”式对比、套话、过度强调、重复收尾和破折号等文风问题。搜索结果逐处判断，必要的科学限定和技术符号保留。
 
-英文是翻译，字符数与中文不可直接比较；默认仍只加载中文核心，英文版用于英文协作者或英文交付。英文版保留了原项目“默认使用简体中文讨论”的设定；英文团队使用时可自行修改 `AGENTS.en.md` 中该句。
+## 导出发布包
 
-## 依赖
+```bash
+bash scripts/package.sh v3.2
+```
 
-- 构建：Python 3.8+，仅标准库（`re`、`sys`、`pathlib`）；无第三方 Python 包。
-- 打包：`git` 与 `git archive`；无额外依赖。
-- 路由表提到的 skills 均为可选，不随仓库分发；缺失时按协议使用内置降级流程。
+标签须已在本地存在。脚本导出该标签对应的提交，输出到 `dist/`；未提交的修改不会进入包，也无需先推送标签。创建标签、提交或对外发布由维护者另行决定。
 
-## 打包
+## 技能与许可
 
-- 发布包由 GitHub Releases 提供；本地可运行 `scripts/package.sh v3.1` 生成 `dist/scientific-agent-protocol-v3.1.zip`。
-- 脚本要求对应 tag 已存在；先推送 tag。
+助手应先检查当前环境提供的 skills，读取匹配的 `SKILL.md`，再按阶段使用。协议不自动安装技能，也不固定安装目录；缺失时说明限制，采用适用的替代流程。
 
-## 修改流程
-
-1. 只改 `AGENTS.md`、`AGENTS.en.md` 或对应的 `references/*.md`；两个 `*.full.md` 由脚本生成，不手改。
-2. 运行 `python3 build_full.py`。
-3. 按上面的检查项验证；需要分享时发送对应的 `*.full.md`。
-4. 同步到项目：中文版复制 `AGENTS.md` + `references/`；英文版复制 `AGENTS.en.md` + `references/en/`。完整版只在一次性使用或跨助手分享时使用。
-
-## 许可
-
-- 代码（`build_full.py`、`scripts/package.sh`）：MIT，见 `LICENSE`。
-- 文档（`AGENTS*.md`、`README*.md`、`references/**`、`CHANGELOG.md`、`THIRD_PARTY.md`）：CC BY 4.0，见 `LICENSE-docs`。
-- 第三方 skill 名称仅用于路由引用；本仓库不打包其内容/代码，见 `THIRD_PARTY.md`。
-
-## 说明
-
-- 核心与 references 的衔接靠 HTML 注释标记 `<!-- FULL:name -->`；改标记名时同步改 `build_full.py`。
-- 可选角色 `target_research_planner` 与 `statistical_design_inference` 的完整提示词不内嵌 `*.full.md`；分享时随对应的 `references/target-research-planner.md`、`references/statistical-design-inference.md` 携带。
-- 旧版本已移出工作区；后续版本历史由 git 提交记录保存。
-- 本仓库默认分支为 `main`，默认 README 为中文。
+构建和打包代码采用 [MIT](LICENSE)；提示词与文档采用 [CC BY 4.0](LICENSE-docs)。第三方 skills 的内容和代码不随仓库分发，见[第三方说明](THIRD_PARTY.md)。

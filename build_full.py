@@ -1,138 +1,118 @@
 #!/usr/bin/env python3
-"""Build full single-file versions from each core and its references."""
+"""Build or check complete research prompts using only the standard library."""
 
 from __future__ import annotations
 
+import argparse
 import re
-import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-
 LANGS = {
     "zh": {
         "core": "AGENTS.md",
         "refs": "references",
         "out": "AGENTS.full.md",
-        "form_note": "> 完整单文件版，由 `AGENTS.md` 与 `references/` 自动构建，可直接上传或粘贴。",
-        "replacements": [
-            ("或 `references/background.md` 的模板", "或文末的背景模板"),
-            ("（见 `references/roles.md`）", "（见下文的子智能体角色提示词）"),
-            ("按 `references/skill-routing.md` 检查", "按下文的“Skill 检测与调用”检查"),
-            ("按 `references/roles.md` 传入", "按上文传入"),
-            ("`references/background.md` 的模板", "文末的背景模板"),
-            ("`references/skill-routing.md`", "下文的“Skill 检测与调用”"),
-            ("`references/roles.md`", "下文的子智能体角色提示词"),
-            ("[references/statistical-design-inference.md](references/statistical-design-inference.md)", "BioStats 角色提示词（可选角色文件，单文件完整版不内嵌）"),
-            ("[references/target-research-planner.md](references/target-research-planner.md)", "BioTarget 角色提示词（可选角色文件，单文件完整版不内嵌）"),
-            ("[references/roles.md](references/roles.md)", "角色提示词（见上文或下文）"),
-            ("[statistical-design-inference.md](statistical-design-inference.md)", "BioStats 角色提示词（可选角色文件，单文件完整版不内嵌）"),
-            ("[BioTarget 完整提示词](target-research-planner.md)", "BioTarget 角色提示词（可选角色文件，单文件完整版不内嵌）"),
-            ("[target-research-planner.md](target-research-planner.md)", "BioTarget 角色提示词（可选角色文件，单文件完整版不内嵌）"),
-        ],
-        "pointers": (
-            "references/roles.md",
-            "references/skill-routing.md",
-            "references/background.md",
-            "references/target-research-planner.md",
-            "references/statistical-design-inference.md",
-            "target-research-planner.md",
-            "statistical-design-inference.md",
-        ),
+        "note": "> 完整单文件版，包含四个角色的指令和引用资料，由源文件自动生成。",
+        "role_marker": "## 完整角色提示词",
+        "role_titles": ("BioStats 完整提示词", "BioTarget 完整提示词"),
     },
     "en": {
         "core": "AGENTS.en.md",
         "refs": "references/en",
         "out": "AGENTS.en.full.md",
-        "form_note": "> Complete single-file version, built automatically from `AGENTS.en.md` and `references/en/`; ready to upload or paste.",
-        "replacements": [
-            ("or the template in `references/en/background.md`", "or the template at the end of this file"),
-            ("(see `references/en/roles.md`)", "(see the subagent role prompts below)"),
-            ('check the available skills against `references/en/skill-routing.md`', 'check the available skills against "Skill Detection and Selection" below'),
-            ("as described in `references/en/roles.md`", "as described above"),
-            ("`references/en/background.md`", "the template at the end of this file"),
-            ("`references/en/skill-routing.md`", '"Skill Detection and Selection" below'),
-            ("`references/en/roles.md`", "the subagent role prompts below"),
-            ("[references/en/statistical-design-inference.md](references/en/statistical-design-inference.md)", "the BioStats role prompt (optional role file; not included in this single-file version)"),
-            ("[references/en/target-research-planner.md](references/en/target-research-planner.md)", "the BioTarget role prompt (optional role file; not included in this single-file version)"),
-            ("[references/en/roles.md](references/en/roles.md)", "the role prompts above or below"),
-            ("[statistical-design-inference.md](statistical-design-inference.md)", "the BioStats role prompt (optional role file; not included in this single-file version)"),
-            ("[full BioTarget prompt](target-research-planner.md)", "the BioTarget role prompt (optional role file; not included in this single-file version)"),
-            ("[target-research-planner.md](target-research-planner.md)", "the BioTarget role prompt (optional role file; not included in this single-file version)"),
-        ],
-        "pointers": (
-            "references/en/roles.md",
-            "references/en/skill-routing.md",
-            "references/en/background.md",
-            "references/en/target-research-planner.md",
-            "references/en/statistical-design-inference.md",
-            "target-research-planner.md",
-            "statistical-design-inference.md",
-        ),
+        "note": "> Generated single-file edition with all four role prompts and supporting material.",
+        "role_marker": "## Full Role Prompt",
+        "role_titles": ("Full BioStats prompt", "Full BioTarget prompt"),
     },
 }
-
+SECTIONS = ("roles", "skill-routing", "background")
+ROLES = (("statistical-design-inference", "bio-stats"), ("target-research-planner", "bio-target"))
 INCLUDE_RE = re.compile(r"<!-- FULL:([a-z-]+) -->\n(.*?)<!-- /FULL:\1 -->", re.DOTALL)
+LINK_RE = re.compile(r"(?<!!)\[([^\]]+)\]\(([^)\s]+)\)")
 
 
-def build(lang: str) -> None:
+def build(lang: str) -> str:
     cfg = LANGS[lang]
-    core = ROOT / cfg["core"]
-    refs = ROOT / cfg["refs"]
-    out = ROOT / cfg["out"]
-
+    core, refs = ROOT / cfg["core"], ROOT / cfg["refs"]
     text = core.read_text(encoding="utf-8")
-
     openings = re.findall(r"<!-- FULL:([a-z-]+) -->", text)
     closings = re.findall(r"<!-- /FULL:([a-z-]+) -->", text)
-    if openings != closings:
-        sys.exit(f"[{lang}] marker mismatch:\n  open:  {openings}\n  close: {closings}")
-    if len(openings) != len(set(openings)):
-        sys.exit(f"[{lang}] duplicate marker: {openings}")
+    expected = ["form", *SECTIONS]
+    if openings != expected or closings != expected:
+        raise ValueError(f"{core.name}: expected matching blocks {expected}; got {openings} / {closings}")
 
-    replaced: list[str] = []
+    anchors = {core.resolve(): "protocol"}
+    anchors.update({(refs / f"{name}.md").resolve(): name for name in SECTIONS})
+    anchors.update({(refs / f"{name}.md").resolve(): anchor for name, anchor in ROLES})
 
-    def repl(match: re.Match[str]) -> str:
+    def rewrite_links(content: str, source: Path) -> str:
+        def replace(match: re.Match[str]) -> str:
+            label, target = match.groups()
+            if target.startswith("#") or re.match(r"[a-zA-Z][a-zA-Z0-9+.-]*:", target):
+                return match.group(0)
+            resolved = (source.parent / target).resolve()
+            if resolved not in anchors:
+                raise ValueError(f"{source}: unsupported local link {target}")
+            return f"[{label}](#{anchors[resolved]})"
+        return LINK_RE.sub(replace, content)
+
+    def include(match: re.Match[str]) -> str:
         name = match.group(1)
-        replaced.append(name)
         if name == "form":
-            return cfg["form_note"]
-        ref = refs / f"{name}.md"
-        if not ref.is_file():
-            sys.exit(f"[{lang}] missing reference: {ref}")
-        return ref.read_text(encoding="utf-8").strip() + "\n"
+            return cfg["note"]
+        source = refs / f"{name}.md"
+        content = rewrite_links(source.read_text(encoding="utf-8").strip(), source)
+        return f'<a id="{name}"></a>\n\n{content}\n'
 
-    full = INCLUDE_RE.sub(repl, text)
-    if replaced != openings:
-        sys.exit(f"[{lang}] not all blocks replaced: replaced={replaced} openings={openings}")
+    full = rewrite_links(text, core)
+    full = INCLUDE_RE.sub(include, full)
+    for (name, anchor), title in zip(ROLES, cfg["role_titles"]):
+        source = refs / f"{name}.md"
+        content = source.read_text(encoding="utf-8")
+        marker = cfg["role_marker"] + "\n"
+        if content.count(marker) != 1 or not content.split(marker, 1)[1].strip():
+            raise ValueError(f"{source}: expected one nonempty full-role section")
+        body = rewrite_links(content.split(marker, 1)[1].strip(), source)
+        full += f'\n<a id="{anchor}"></a>\n\n## {title}\n\n{body}\n'
+    full = '<a id="protocol"></a>\n\n' + full
     if "FULL:" in full:
-        sys.exit(f"[{lang}] unresolved FULL marker remains in output")
-
-    for old, new in cfg["replacements"]:
-        full = full.replace(old, new)
-    for pointer in cfg["pointers"]:
-        if pointer in full:
-            sys.exit(f"[{lang}] unresolved reference pointer in full: {pointer}")
-
-    full = re.sub(r"\n{3,}", "\n\n", full).strip() + "\n"
-    out.write_text(full, encoding="utf-8")
-
-    print(f"[{lang}] core: {len(text)} chars / {len(text.encode('utf-8'))} bytes")
-    print(f"[{lang}] full: {len(full)} chars / {len(full.encode('utf-8'))} bytes")
-    print(f"[{lang}] blocks: {', '.join(replaced)}")
+        raise ValueError(f"{core.name}: unresolved include marker")
+    present = re.findall(r'<a id="([^"]+)"></a>', full)
+    if len(present) != len(set(present)):
+        raise ValueError(f"{core.name}: duplicate internal anchor")
+    for _, target in LINK_RE.findall(full):
+        if target.startswith("#") and target[1:] not in present:
+            raise ValueError(f"{core.name}: missing anchor {target}")
+    return re.sub(r"\n{3,}", "\n\n", full).strip() + "\n"
 
 
 def main() -> None:
-    args = sys.argv[1:] or ["all"]
-    if args == ["all"]:
-        langs = ["zh", "en"]
-    else:
-        langs = args
-    unknown = [lang for lang in langs if lang not in LANGS]
-    if unknown:
-        sys.exit(f"unknown language(s): {', '.join(unknown)}; use zh, en, or all")
-    for lang in langs:
-        build(lang)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("languages", nargs="*", metavar="LANG", help="zh, en, or all (default: all)")
+    parser.add_argument("--check", action="store_true", help="check generated files without changing them")
+    args = parser.parse_args()
+    languages = args.languages or ["all"]
+    if any(lang not in (*LANGS, "all") for lang in languages):
+        parser.error("languages must be zh, en, or all")
+    if "all" in languages and len(languages) > 1:
+        parser.error("use 'all' alone, or select zh and/or en")
+    languages = list(LANGS) if languages == ["all"] else list(dict.fromkeys(languages))
+    try:
+        # Validate every selected language before changing any output.
+        outputs = [(ROOT / LANGS[lang]["out"], build(lang)) for lang in languages]
+        if args.check:
+            stale = [path.name for path, content in outputs
+                     if not path.is_file() or path.read_text(encoding="utf-8") != content]
+            if stale:
+                parser.exit(1, "Rebuild required: " + ", ".join(stale) + "\n")
+        else:
+            for path, content in outputs:
+                path.write_text(content, encoding="utf-8")
+        for path, content in outputs:
+            print(f"{path.name}: {'current' if args.check else 'built'}, {len(content):,} characters, {len(content.encode('utf-8')):,} bytes")
+    except (OSError, ValueError) as error:
+        parser.exit(1, f"Build failed: {error}\n")
 
 
 if __name__ == "__main__":
